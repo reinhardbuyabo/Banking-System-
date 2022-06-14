@@ -18,6 +18,21 @@ bool adminLogin(string name, string password){
     }
 };
 
+bool login(string name, string password){
+    ifstream userFile;
+    userFile.open(name + ".txt");
+    string userName;
+    userFile >> userName;
+    string userPass;
+    userFile >> userPass;
+
+    if (userName == name && userPass == password) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 int main () {
     cout << "*****WELCOME TO E-CASH SERVICES*****" << endl;
     cout << "1. Normal User Login" << endl;
@@ -36,15 +51,17 @@ int main () {
         string password;
         cin >> password;
         cout << endl << "--------------------------------------------------" << endl;
-        // Missing code for functionality that involves user login.
-        
-        cout << "Welcome " << username << endl;
+        if (login(username, password)) {
+            cout << "Welcome " << username << endl;
         cout << "1. Withdraw cash" << endl;
         cout << "2. Check balance" << endl;
         cout << "3. Reset you password" << endl << endl;
         cout << "Enter your option to proceed: ";
         int optiontwo;
         cin >> optiontwo;
+        } else {
+            cout << "Ask admin to register you!";
+        }
     } else if (option == 2) {
         cout << "Welcome to the Registration and Deposit page" << endl;
         cout << "Enter administrator username and password." << endl;
@@ -55,7 +72,6 @@ int main () {
         string adminPassword;
         cin >> adminPassword;
         cout << endl << "--------------------------------------------------" << endl;
-        // Missing code for functionality that involves admin login.
         if (adminLogin(adminUsername, adminPassword)) {
             cout << "Welcome "<< adminUsername << endl;
         cout << "1. Deposit money for client" << endl;
@@ -68,6 +84,5 @@ int main () {
         } else {
             cout << "Wrong password!" << endl;
         }
-        
     }
 }
