@@ -1,6 +1,22 @@
 #include <iostream>
 #include <string>
-using namespace std; 
+#include <fstream>
+using namespace std;
+
+bool adminLogin(string name, string password){
+    ifstream adminFile;
+    adminFile.open(name + ".txt");
+    string adminName;
+    adminFile >> adminName;
+    string adminPass;
+    adminFile >> adminPass;
+
+    if (adminName == name && adminPass == password) {
+        return true;
+    } else {
+        return false;
+    }
+};
 
 int main () {
     cout << "*****WELCOME TO E-CASH SERVICES*****" << endl;
@@ -40,15 +56,18 @@ int main () {
         cin >> adminPassword;
         cout << endl << "--------------------------------------------------" << endl;
         // Missing code for functionality that involves admin login.
-
-        cout << "Welcome "<< adminUsername << endl;
+        if (adminLogin(adminUsername, adminPassword)) {
+            cout << "Welcome "<< adminUsername << endl;
         cout << "1. Deposit money for client" << endl;
         cout << "2. Register new client" << endl;
-        cout << "3. Reset your password" << endl << endl;
+        cout << "3. Reset your password" << endl;
         cout << endl << "--------------------------------------------------" << endl;
         cout << "Enter your option to proceed: ";
         int optionthree;
         cin >> optionthree;
-
+        } else {
+            cout << "Wrong password!" << endl;
+        }
+        
     }
 }
