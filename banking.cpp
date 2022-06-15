@@ -10,27 +10,62 @@ bool adminLogin(string name, string password){
     adminFile >> adminName;
     string adminPass;
     adminFile >> adminPass;
-
+    adminFile.close();
     if (adminName == name && adminPass == password) {
         return true;
     } else {
         return false;
     }
-};
+}
+
+void registerClient(string name, string password) {
+    ofstream usersDBFile;
+    usersDBFile.open("usersDB.txt", ios::app);
+    usersDBFile << name << endl << password << endl;
+
+    fstream user(name + ".txt", ios::app);
+    float account = 0;
+    user << account;
+    user.close();
+}
 
 bool login(string name, string password){
-    ifstream userFile;
-    userFile.open(name + ".txt");
-    string userName;
-    userFile >> userName;
-    string userPass;
-    userFile >> userPass;
+    bool abc = false;
+    int count = 0;
+    int temp;
+    string userInfo;
+    ifstream users;
+    users.open("usersDB.txt");
+    
+    while (getline(users, userInfo)) {
+        count++;
+        if (userInfo == name) {
+            temp = count;
+            continue;
+            }
 
-    if (userName == name && userPass == password) {
-        return true;
-    } else {
-        return false;
+        if (temp == (count - 1)) {
+            if (password == userInfo) {
+                abc = true;
+                users.close();
+                break;
+            }
+        }
     }
+    return abc;
+}
+
+void deposit(string name, float deposit) {
+   ifstream client(name + ".txt");
+   float balance;
+   
+   client >> balance;
+   balance += deposit;
+   client.close();
+
+   ofstream user(name + ".txt");
+   user << balance;
+   user.close();
 }
 
 int main () {
@@ -59,8 +94,13 @@ int main () {
         cout << "Enter your option to proceed: ";
         int optiontwo;
         cin >> optiontwo;
+            if (optiontwo == 1) {
+                // Implementation of withdrawing.
+                // withdraw();
+            }
+
         } else {
-            cout << "Ask admin to register you!";
+            cout << "Wrong credentials!" << endl;
         }
     } else if (option == 2) {
         cout << "Welcome to the Registration and Deposit page" << endl;
@@ -81,8 +121,26 @@ int main () {
         cout << "Enter your option to proceed: ";
         int optionthree;
         cin >> optionthree;
+        string clientName;
+            if(optionthree == 1){
+                // Implementation for depositing money for client.
+                cout << "Enter client name: ";
+                cin >> clientName;
+                cout << "Enter amount to deposit: ";
+                float amount;
+                cin >> amount;
+                deposit(clientName, amount);
+                return 0;
+            } else if (optionthree == 2) {
+                cout << "Enter client name: ";
+                cin >> clientName;
+                cout << "Enter client password: ";
+                string clientPassword;
+                cin >> clientPassword;
+                registerClient(clientName, clientPassword);
+            }
         } else {
-            cout << "Wrong password!" << endl;
+            cout << "Wrong username or password!" << endl;
         }
     }
 }
