@@ -68,6 +68,22 @@ void deposit(string name, float deposit) {
    user.close();
 }
 
+string withdraw(string name, float withdrawal) {
+    ifstream bal(name + ".txt");
+    float balance;
+    bal >> balance;
+    bal.close();
+    ofstream customer(name + ".txt");
+    if (balance > withdrawal) {
+        balance -= withdrawal;
+        customer << balance;
+        customer.close();
+        return "Successful.";
+    } else {
+        return "Failed! Not enough money on account.";
+    }
+}
+
 int main () {
     cout << "*****WELCOME TO E-CASH SERVICES*****" << endl;
     cout << "1. Normal User Login" << endl;
@@ -95,8 +111,10 @@ int main () {
         int optiontwo;
         cin >> optiontwo;
             if (optiontwo == 1) {
-                // Implementation of withdrawing.
-                // withdraw();
+                cout << "How much do you want to withdraw: ";
+                float cash;
+                cin >> cash;
+                cout << "Transaction " << withdraw(username, cash) << endl;
             }
 
         } else {
