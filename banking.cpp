@@ -117,6 +117,8 @@ string userPasswordReset(string name, string oldpassword, string newpassword) {
     }
     user.close();
     tempFile.close();
+    remove("usersDB.txt");
+    rename("tempFile.txt", "usersDB.txt");
     if (changed) {
          return "Password changed successfully";
     } else {
