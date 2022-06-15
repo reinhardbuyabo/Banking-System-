@@ -126,6 +126,33 @@ string userPasswordReset(string name, string oldpassword, string newpassword) {
     }
 }
 
+string adminPasswordReset(string oldpassword, string newpassword){
+    ifstream admin("admin.txt");
+    ofstream tempFile("tempfile.txt");
+
+    string adminInfo;
+    bool changed = false;
+
+    while (admin >> adminInfo) {
+        if (adminInfo == oldpassword) {
+            adminInfo = newpassword;
+            changed = true;
+
+        }
+        adminInfo += "\n";
+        tempFile << adminInfo;
+    }
+    admin.close();
+    tempFile.close();
+    remove("admin.txt");
+    rename("tempfile.txt", "admin.txt");
+    if (changed) {
+        return "Admin password changed successfully.";
+    } else {
+        return "Failed.";
+    }
+}
+
 int main () {
     cout << "*****WELCOME TO E-CASH SERVICES*****" << endl;
     cout << "1. Normal User Login" << endl;
@@ -207,6 +234,14 @@ int main () {
                 string clientPassword;
                 cin >> clientPassword;
                 registerClient(clientName, clientPassword);
+            } else if (optionthree == 3) {
+                cout << "Enter old password: ";
+                string adminoldpassword;
+                cin >> adminoldpassword;
+                cout << "Enter new password: ";
+                string adminnewpassword;
+                cin >> adminnewpassword;
+                cout << adminPasswordReset(adminoldpassword, adminnewpassword) << endl;
             }
         } else {
             cout << "Wrong username or password!" << endl;
