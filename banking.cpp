@@ -30,7 +30,7 @@ void registerClient(string name, string password) {
 }
 
 bool login(string name, string password){
-    bool abc = false;
+    bool logged = false;
     int count = 0;
     int temp;
     string userInfo;
@@ -46,13 +46,13 @@ bool login(string name, string password){
 
         if (temp == (count - 1)) {
             if (password == userInfo) {
-                abc = true;
+                logged = true;
                 users.close();
                 break;
             }
         }
     }
-    return abc;
+    return logged;
 }
 
 void deposit(string name, float deposit) {
@@ -92,6 +92,38 @@ float checkBalance(string name) {
     return balance;
 }
 
+string userPasswordReset(string name, string oldpassword, string newpassword) {
+    ifstream user("usersDB.txt");
+    ofstream tempFile("tempfile.txt");
+
+    int count = 0, temp;
+    bool changed = false;
+    
+    string userInfo;
+    while(getline(user, userInfo)) {
+        count++;
+        if (userInfo == name) {
+            temp = count;
+        }
+
+        if (temp == (count - 1)) {
+            if (oldpassword == userInfo) {
+                userInfo = newpassword;
+                changed = true;                
+            }
+        }
+        userInfo += "\n";
+        tempFile << userInfo;
+    }
+    user.close();
+    tempFile.close();
+    if (changed) {
+         return "Password changed successfully";
+    } else {
+        return "Failed!";
+    }
+}
+
 int main () {
     cout << "*****WELCOME TO E-CASH SERVICES*****" << endl;
     cout << "1. Normal User Login" << endl;
@@ -125,6 +157,14 @@ int main () {
                 cout << "Transaction " << withdraw(username, cash) << endl;
             } else if (optiontwo == 2) {
                 cout << "Balance: " << checkBalance(username) << endl;
+            } else if (optiontwo == 3) {
+                cout << "Enter old password: ";
+                string oldPassword;
+                cin >> oldPassword;
+                cout << "Enter new password: ";
+                string newPassword;
+                cin >> newPassword;
+                cout << userPasswordReset(username, oldPassword, newPassword) << endl;
             }
 
         } else {
