@@ -84,6 +84,14 @@ string withdraw(string name, float withdrawal) {
     }
 }
 
+float checkBalance(string name) {
+    ifstream checkBal(name + ".txt");
+    float balance;
+
+    checkBal >> balance;
+    return balance;
+}
+
 int main () {
     cout << "*****WELCOME TO E-CASH SERVICES*****" << endl;
     cout << "1. Normal User Login" << endl;
@@ -115,6 +123,8 @@ int main () {
                 float cash;
                 cin >> cash;
                 cout << "Transaction " << withdraw(username, cash) << endl;
+            } else if (optiontwo == 2) {
+                cout << "Balance: " << checkBalance(username) << endl;
             }
 
         } else {
@@ -141,7 +151,6 @@ int main () {
         cin >> optionthree;
         string clientName;
             if(optionthree == 1){
-                // Implementation for depositing money for client.
                 cout << "Enter client name: ";
                 cin >> clientName;
                 cout << "Enter amount to deposit: ";
