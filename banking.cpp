@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <conio.h>
 using namespace std;
 
 bool adminLogin(string name, string password){
@@ -170,9 +171,15 @@ int main () {
         string username;
         cin >> username;
         cout << "Enter password: ";
+        // Changes
         string password;
-        cin >> password;
-        cout << endl << "--------------------------------------------------" << endl;
+        int ch = _getch();
+        while (ch != 13) {
+            password.push_back(ch);
+            cout << "*";
+            ch = _getch();
+        }
+        cout << endl << endl << "--------------------------------------------------" << endl;
         if (login(username, password)) {
             cout << "Welcome " << username << endl;
         cout << "1. Withdraw cash" << endl;
@@ -191,10 +198,22 @@ int main () {
             } else if (optiontwo == 3) {
                 cout << "Enter old password: ";
                 string oldPassword;
-                cin >> oldPassword;
+                int ch = _getch();
+                while (ch != 13 ) {
+                    oldPassword.push_back(ch);
+                    cout << "*";
+                    ch = _getch();
+                }
+                cout << endl;
                 cout << "Enter new password: ";
                 string newPassword;
-                cin >> newPassword;
+                ch = _getch();
+                while (ch != 13 ) {
+                    newPassword.push_back(ch);
+                    cout << "*";
+                    ch = _getch();
+                }
+                cout << endl;
                 cout << userPasswordReset(username, oldPassword, newPassword) << endl;
             }
 
@@ -209,8 +228,13 @@ int main () {
         cin >> adminUsername;
         cout << "Enter password: ";
         string adminPassword;
-        cin >> adminPassword;
-        cout << endl << "--------------------------------------------------" << endl;
+        int ch = _getch();
+        while (ch != 13) {
+            adminPassword.push_back(ch);
+            cout << "*";
+            ch = _getch();
+        }
+        cout << endl << endl << "--------------------------------------------------" << endl;
         if (adminLogin(adminUsername, adminPassword)) {
             cout << "Welcome "<< adminUsername << endl;
         cout << "1. Deposit money for client" << endl;
@@ -234,15 +258,33 @@ int main () {
                 cin >> clientName;
                 cout << "Enter client password: ";
                 string clientPassword;
-                cin >> clientPassword;
+                int ch = _getch();
+                while (ch != 13) {
+                    clientPassword.push_back(ch);
+                    cout << "*";
+                    ch = _getch();
+                }
+                cout << endl;
                 cout << registerClient(clientName, clientPassword) << endl;
             } else if (optionthree == 3) {
                 cout << "Enter old password: ";
                 string adminoldpassword;
-                cin >> adminoldpassword;
+                int ch = _getch();
+                while (ch != 13) {
+                    adminoldpassword.push_back(ch);
+                    cout << "*";
+                    ch = _getch();
+                }
+                cout << endl;
                 cout << "Enter new password: ";
                 string adminnewpassword;
-                cin >> adminnewpassword;
+                ch = _getch();
+                while (ch != 13) {
+                    adminnewpassword.push_back(ch);
+                    cout << "*";
+                    ch = _getch();
+                }
+                cout << endl;
                 cout << adminPasswordReset(adminoldpassword, adminnewpassword) << endl;
             }
         } else {
