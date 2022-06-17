@@ -18,7 +18,7 @@ bool adminLogin(string name, string password){
     }
 }
 
-void registerClient(string name, string password) {
+string registerClient(string name, string password) {
     ofstream usersDBFile;
     usersDBFile.open("usersDB.txt", ios::app);
     usersDBFile << name << endl << password << endl;
@@ -27,6 +27,7 @@ void registerClient(string name, string password) {
     float account = 0;
     user << account;
     user.close();
+    return "Registration successful.";
 }
 
 bool login(string name, string password){
@@ -55,7 +56,7 @@ bool login(string name, string password){
     return logged;
 }
 
-void deposit(string name, float deposit) {
+string deposit(string name, float deposit) {
    ifstream client(name + ".txt");
    float balance;
    
@@ -66,6 +67,7 @@ void deposit(string name, float deposit) {
    ofstream user(name + ".txt");
    user << balance;
    user.close();
+   return "Successful.";
 }
 
 string withdraw(string name, float withdrawal) {
@@ -225,7 +227,7 @@ int main () {
                 cout << "Enter amount to deposit: ";
                 float amount;
                 cin >> amount;
-                deposit(clientName, amount);
+                cout << "Transaction " << deposit(clientName, amount) << endl;
                 return 0;
             } else if (optionthree == 2) {
                 cout << "Enter client name: ";
@@ -233,7 +235,7 @@ int main () {
                 cout << "Enter client password: ";
                 string clientPassword;
                 cin >> clientPassword;
-                registerClient(clientName, clientPassword);
+                cout << registerClient(clientName, clientPassword) << endl;
             } else if (optionthree == 3) {
                 cout << "Enter old password: ";
                 string adminoldpassword;
