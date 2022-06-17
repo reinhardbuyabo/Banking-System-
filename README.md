@@ -20,7 +20,15 @@
     - [x] User passswords on even positions of the text file.
 - The user database does not include:
     - [ ] Users' account balance.
-
+- User-specific text files are created upon registration and their account balance is initialized as 0 within this text file.
+- Passwords should: 
+    - [x] Be entered once, and correctly.
+- Passwords should not contain the following characters:
+    - [ ] Space
+    - [ ] Backspace
+    - [ ] Line and Form Feeds
+    - [ ] Tab
+    - [ ] Escape
 The following code implementations have been used interchangably:
 
 ```
